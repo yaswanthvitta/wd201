@@ -65,9 +65,10 @@ const tomorrow = formattedDate(
             console.log("[x] "+list[i].title+" "+list[i].dueDate.toString())
             }
         else{
-                console.log("[] "+list[i].title+" "+list[i].dueDate.toString())
+                console.log("[ ] "+list[i].title+" "+list[i].dueDate.toString())
             }
       }
+      return ""
     }
   
     return {
