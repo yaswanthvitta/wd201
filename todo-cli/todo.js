@@ -63,10 +63,20 @@ const tomorrow = formattedDate(
       s=''
       for(let i=0;i<list.length;i++){
         if(list[i].completed===true){
+            if(list[i].dueDate===today){
+                s=s+("[x] "+list[i].title)+"\n"
+            }
+            else{
             s=s+("[x] "+list[i].title+" "+list[i].dueDate.toString())+"\n"
             }
+            }
         else{
+            if(list[i].dueDate===today){
+                s=s+("[ ] "+list[i].title)+"\n"
+            }
+            else{
             s=s+("[ ] "+list[i].title+" "+list[i].dueDate.toString())+"\n"
+            }
             }
       }
       return s.slice(0,-1)
