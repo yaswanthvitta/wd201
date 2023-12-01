@@ -60,15 +60,16 @@ const tomorrow = formattedDate(
     const toDisplayableList = (list) => {
       // Format the To-Do list here, and return the output string
       // as per the format given above.
+      s=''
       for(let i=0;i<list.length;i++){
         if(list[i].completed===true){
-            console.log("[x] "+list[i].title+" "+list[i].dueDate.toString())
+            s=s+("[x] "+list[i].title+" "+list[i].dueDate.toString())+"\n"
             }
         else{
-                console.log("[ ] "+list[i].title+" "+list[i].dueDate.toString())
+            s=s+("[ ] "+list[i].title+" "+list[i].dueDate.toString())+"\n"
             }
       }
-      return ""
+      return s.slice(0,-1)
     }
   
     return {
