@@ -3,12 +3,7 @@ const formattedDate = (d) => {
 };
 const dateToday = new Date();
 const today = formattedDate(dateToday);
-const yesterday = formattedDate(
-  new Date(new Date().setDate(dateToday.getDate() - 1)),
-);
-const tomorrow = formattedDate(
-  new Date(new Date().setDate(dateToday.getDate() + 1)),
-);
+const { Op } = require("sequelize");
 ("use strict");
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
@@ -26,27 +21,29 @@ module.exports = (sequelize, DataTypes) => {
 
       console.log("Overdue");
       // FILL IN HERE
-      const a = Todo.overdue();
-      for (let i = 0; i < a.length; i++) {
-        a[i].displayableString();
+      const a = await Todo.overdue();
+      const todolist = a.map((todo) => todo.displayableString());
+      for (let i = 0; i < todolist.length; i++) {
+        console.log(todolist[i]);
       }
-
       console.log("\n");
 
       console.log("Due Today");
       // FILL IN HERE
-      const b = Todo.dueToday();
-      for (let i = 0; i < b.length; i++) {
-        b[i].displayableString();
+      const b = await Todo.dueToday();
+      const todolist2 = b.map((todo) => todo.displayableString1());
+      for (let i = 0; i < todolist2.length; i++) {
+        console.log(todolist2[i]);
       }
 
       console.log("\n");
 
       console.log("Due Later");
       // FILL IN HERE
-      const c = Todo.dueLater();
-      for (let i = 0; i < c.length; i++) {
-        c[i].displayableString();
+      const c = await Todo.dueLater();
+      const todolist3 = c.map((todo) => todo.displayableString());
+      for (let i = 0; i < todolist3.length; i++) {
+        console.log(todolist3[i]);
       }
     }
 
@@ -54,7 +51,9 @@ module.exports = (sequelize, DataTypes) => {
       // FILL IN HERE TO RETURN OVERDUE ITEMS
       const todos = await Todo.findAll({
         where: {
-          dueDate: yesterday,
+          dueDate: {
+            [Op.lt]: today,
+          },
         },
       });
       return todos;
@@ -74,7 +73,9 @@ module.exports = (sequelize, DataTypes) => {
       // FILL IN HERE TO RETURN ITEMS DUE LATER
       const todos = await Todo.findAll({
         where: {
-          dueDate: tomorrow,
+          dueDate: {
+            [Op.gt]: today,
+          },
         },
       });
       return todos;
@@ -82,18 +83,24 @@ module.exports = (sequelize, DataTypes) => {
 
     static async markAsComplete(id) {
       // FILL IN HERE TO MARK AN ITEM AS COMPLETE
-      const todo = await Todo.findOne({
-        where: {
-          id: id,
+      await Todo.update(
+        { completed: true },
+        {
+          where: {
+            id: id,
+          },
         },
-      });
-
-      todo.completed = true;
+      );
     }
 
     displayableString() {
       let checkbox = this.completed ? "[x]" : "[ ]";
       return `${this.id}. ${checkbox} ${this.title} ${this.dueDate}`;
+    }
+
+    displayableString1() {
+      let checkbox = this.completed ? "[x]" : "[ ]";
+      return `${this.id}. ${checkbox} ${this.title}`;
     }
   }
 
