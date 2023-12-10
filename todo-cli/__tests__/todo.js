@@ -20,7 +20,7 @@ describe("test1", () => {
     expect(all.length).toBe(2);
     add({
       title: "Pay electric bill",
-      dueDate: "2023-12-02",
+      dueDate: "2023-12-10",
       completed: false,
     });
     markAsComplete(0);
