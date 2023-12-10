@@ -96,6 +96,7 @@ module.exports = (sequelize, DataTypes) => {
       return `${this.id}. ${checkbox} ${this.title} ${this.dueDate}`;
     }
   }
+
   Todo.init(
     {
       title: DataTypes.STRING,
