@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       const b = await Todo.dueToday();
       const todolist2 = b.map((todo) => todo.displayableString());
       for (let i = 0; i < todolist2.length; i++) {
-        console.log(todolist2[i].substring(0, todolist2[i].length - 10));
+        console.log(todolist2[i]);
       }
 
       console.log("\n");
@@ -95,12 +95,10 @@ module.exports = (sequelize, DataTypes) => {
 
     displayableString() {
       let checkbox = this.completed ? "[x]" : "[ ]";
+      if (this.dueDate == today) {
+        return `${this.id}. ${checkbox} ${this.title}`;
+      }
       return `${this.id}. ${checkbox} ${this.title} ${this.dueDate}`;
-    }
-
-    displayableString1() {
-      let checkbox = this.completed ? "[x]" : "[ ]";
-      return `${this.id}. ${checkbox} ${this.title}`;
     }
   }
 
