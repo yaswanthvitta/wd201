@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
       const b = await Todo.dueToday();
       const todolist2 = b.map((todo) => todo.displayableString());
       for (let i = 0; i < todolist2.length; i++) {
-        console.log(todolist2[i].substring(0, todolist2[i].length - 11));
+        console.log(todolist2[i].substring(0, todolist2[i].length - 10));
       }
 
       console.log("\n");
