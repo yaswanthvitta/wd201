@@ -47,7 +47,7 @@ app.delete("/todos/:id", async (request, response) => {
   try {
     const deletedTodo = await Todo.deletedTodo(request.params.id);
 
-    if (deletedTodo == "0") {
+    if (JSON.stringify(deletedTodo) == "0") {
       return response.send(false);
     } else {
       return response.send(true);
