@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Todo extends Model {
     /**
@@ -13,22 +11,33 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
 
-    static addTodo({title,dueDate}){
-      return this.create({title:title,dueDate:dueDate,compleated:false})
-    }
-    
-    markAsCompleted(){
-      return this.update({compleated: true})
+    static addTodo({ title, dueDate }) {
+      return this.create({ title: title, dueDate: dueDate, compleated: false });
     }
 
+    markAsCompleted() {
+      return this.update({ compleated: true });
+    }
+
+    static deletedTodo(id) {
+      const a = this.destroy({ where: { id: id } });
+      return a;
+    }
+
+    static getTodo() {
+      return this.findAll();
+    }
   }
-  Todo.init({
-    title: DataTypes.STRING,
-    dueDate: DataTypes.DATEONLY,
-    compleated: DataTypes.BOOLEAN
-  }, {
-    sequelize,
-    modelName: 'Todo',
-  });
+  Todo.init(
+    {
+      title: DataTypes.STRING,
+      dueDate: DataTypes.DATEONLY,
+      compleated: DataTypes.BOOLEAN,
+    },
+    {
+      sequelize,
+      modelName: "Todo",
+    },
+  );
   return Todo;
 };
