@@ -5,7 +5,7 @@ const { Todo } = require("./models");
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 
-app.get("/", async (request, response) => {
+app.get("/todos", async (request, response) => {
   try {
     const todo = await Todo.getTodo();
     return response.json(todo);
@@ -21,7 +21,7 @@ app.post("/todos", async (request, response) => {
     const todo = await Todo.addTodo({
       title: request.body.title,
       dueDate: request.body.dueDate,
-      compleated: false,
+      completed: false,
     });
 
     return response.json(todo);

@@ -12,11 +12,11 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     static addTodo({ title, dueDate }) {
-      return this.create({ title: title, dueDate: dueDate, compleated: false });
+      return this.create({ title: title, dueDate: dueDate, completed: false });
     }
 
     markAsCompleted() {
-      return this.update({ compleated: true });
+      return this.update({ completed: true });
     }
 
     static deletedTodo(id) {
@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       title: DataTypes.STRING,
       dueDate: DataTypes.DATEONLY,
-      compleated: DataTypes.BOOLEAN,
+      completed: DataTypes.BOOLEAN,
     },
     {
       sequelize,
