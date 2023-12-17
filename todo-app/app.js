@@ -9,7 +9,16 @@ const path = require("path");
 app.set("view engine", "ejs");
 
 app.get("/", async (request, response) => {
-  response.render("index.ejs");
+  const allTodos = await Todo.getTodo();
+  if (request.accepts("html")) {
+    response.render("index", {
+      allTodos,
+    });
+  } else {
+    response.json({
+      allTodos,
+    });
+  }
 });
 
 app.use(express.static(path.join(__dirname, "public")));
