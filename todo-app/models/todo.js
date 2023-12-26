@@ -15,8 +15,12 @@ module.exports = (sequelize, DataTypes) => {
       return this.create({ title: title, dueDate: dueDate, completed: false });
     }
 
-    markAsCompleted() {
-      return this.update({ completed: true });
+    setCompletionStatus(status) {
+      if (status == false) {
+        return this.update({ completed: true });
+      } else {
+        return this.update({ completed: false });
+      }
     }
 
     static deletedTodo(id) {
