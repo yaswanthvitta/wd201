@@ -9,10 +9,18 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Todo.belongsTo(models.User, {
+        foreignKey: "userId",
+      });
     }
 
-    static addTodo({ title, dueDate }) {
-      return this.create({ title: title, dueDate: dueDate, completed: false });
+    static addTodo({ title, dueDate, userId }) {
+      return this.create({
+        title: title,
+        dueDate: dueDate,
+        completed: false,
+        userId,
+      });
     }
 
     setCompletionStatus(status) {
@@ -23,8 +31,8 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
 
-    static deletedTodo(id) {
-      const a = this.destroy({ where: { id: id } });
+    static deletedTodo(id, userId) {
+      const a = this.destroy({ where: { id: id, userId: userId } });
       return a;
     }
 
@@ -34,7 +42,13 @@ module.exports = (sequelize, DataTypes) => {
   }
   Todo.init(
     {
-      title: DataTypes.STRING,
+      title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          notNull: true,
+        },
+      },
       dueDate: DataTypes.DATEONLY,
       completed: DataTypes.BOOLEAN,
     },
