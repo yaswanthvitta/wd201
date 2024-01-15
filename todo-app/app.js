@@ -82,11 +82,15 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.set("view engine", "ejs");
 
-app.get("/", async (request, response) => {
-  response.render("index", {
-    csrfToken: request.csrfToken(),
-  });
-});
+app.get(
+  "/",
+  connectEnsure.ensureLoggedOut({ redirectTo: "/todos" }),
+  async (request, response) => {
+    response.render("index", {
+      csrfToken: request.csrfToken(),
+    });
+  },
+);
 
 app.get("/todos", connectEnsure.ensureLoggedIn(), async (request, response) => {
   const allTodos = await Todo.getTodo();
